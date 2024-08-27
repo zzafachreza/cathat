@@ -8,14 +8,14 @@ import moment from 'moment';
 import { showMessage } from 'react-native-flash-message';
 import { maskJs, maskCurrency } from 'mask-js';
 
-export default function TambahTekananDarah({ navigation, route }) {
+export default function AddGula({ navigation, route }) {
 
     const tipe = route.params;
 
     const [data, setData] = useState([]);
     const isFocus = useIsFocused();
     const __getData = () => {
-        getData('tekanan_darah').then(res => {
+        getData('gula_darah').then(res => {
             if (!res) {
                 setData([])
             } else {
@@ -37,36 +37,20 @@ export default function TambahTekananDarah({ navigation, route }) {
 
     const [kirim, setKirim] = useState({
         id: moment().format('YYYYMMDDHHmmss_TD'),
-        sistolik: '',
-        diastolik: '',
+        gds: '',
+        gdp: '',
         tanggal: moment().format('YYYY-MM-DD'),
-        waktu: '',
+        hba1c: '',
     });
 
     const sendData = () => {
 
 
-        if (kirim.sistolik.length == 0) {
-            showMessage({ message: 'Sistolik wajib di isi!' })
-        } else if (kirim.diastolik.length == 0) {
-            showMessage({ message: 'Diastolik wajib di isi!' })
+        if (kirim.gds.length == 0) {
+            showMessage({ message: 'gds wajib di isi!' })
+        } else if (kirim.gdp.length == 0) {
+            showMessage({ message: 'gdp wajib di isi!' })
         } else {
-            let hasilStatus = '';
-            if ((kirim.sistolik >= 90 && kirim.sistolik <= 140) && (kirim.diastolik >= 60 && kirim.diastolik <= 90)) {
-                hasilStatus = 'Normal';
-            } else if (kirim.sistolik < 90 && kirim.diastolik < 60) {
-                hasilStatus = 'Hipotensi';
-            } else if (kirim.sistolik > 140) {
-                hasilStatus = 'Hipertensi';
-            } else if (kirim.diastolik < 90) {
-                hasilStatus = 'Hipotensi';
-            } else if (kirim.sistolik > 140 && kirim.diastolik > 90) {
-                hasilStatus = 'Hipertensi';
-            } else if (kirim.sistolik >= 90 && kirim.sistolik <= 140) {
-                hasilStatus = 'Normal';
-            } else if (kirim.diastolik >= 60 && kirim.diastolik <= 90) {
-                hasilStatus = 'Normal';
-            }
 
 
 
@@ -75,14 +59,14 @@ export default function TambahTekananDarah({ navigation, route }) {
                 let IDX = TMP.map(i => i.id).indexOf(kirim.id);
                 TMP[IDX] = {
                     id: kirim.id,
-                    sistolik: kirim.sistolik,
-                    diastolik: kirim.diastolik,
+                    gds: kirim.gds,
+                    gdp: kirim.gdp,
                     tanggal: kirim.tanggal,
-                    waktu: kirim.waktu,
-                    hasil: hasilStatus
+                    hba1c: kirim.hba1c,
+
                 }
                 setData(TMP);
-                storeData('tekanan_darah', TMP);
+                storeData('gula_darah', TMP);
                 showMessage({
                     type: 'success',
                     icon: 'success',
@@ -94,14 +78,13 @@ export default function TambahTekananDarah({ navigation, route }) {
                 let TMP = [...data];
                 TMP.push({
                     id: kirim.id,
-                    sistolik: kirim.sistolik,
-                    diastolik: kirim.diastolik,
+                    gds: kirim.gds,
+                    gdp: kirim.gdp,
                     tanggal: kirim.tanggal,
-                    waktu: kirim.waktu,
-                    hasil: hasilStatus
+                    hba1c: kirim.hba1c,
                 });
                 setData(TMP);
-                storeData('tekanan_darah', TMP);
+                storeData('gula_darah', TMP);
                 showMessage({
                     type: 'success',
                     icon: 'success',
@@ -122,7 +105,7 @@ export default function TambahTekananDarah({ navigation, route }) {
             flex: 1,
             backgroundColor: colors.white
         }}>
-            <MyHeader title="Tambah Tekanan Darah" />
+            <MyHeader title="Gula" />
             <ScrollView>
                 <View style={{
                     padding: 20,
@@ -131,11 +114,11 @@ export default function TambahTekananDarah({ navigation, route }) {
                 }}>
                     <MyInput
                         keyboardType='number-pad'
-                        value={kirim.sistolik}
-                        onChangeText={x => setKirim({ ...kirim, sistolik: x })}
-                        label="Tekanan Darah Sistolik"
+                        value={kirim.gds}
+                        onChangeText={x => setKirim({ ...kirim, gds: x })}
+                        label="GDS"
                         placeholder="Isi disini"
-                        rightLabel="mmHg"
+                        rightLabel="mg/dL"
 
                     />
 
@@ -144,11 +127,23 @@ export default function TambahTekananDarah({ navigation, route }) {
 
                     <MyInput
                         keyboardType='number-pad'
-                        value={kirim.diastolik}
-                        onChangeText={x => setKirim({ ...kirim, diastolik: x })}
-                        label="Tekanan Darah Diastolik"
+                        value={kirim.gdp}
+                        onChangeText={x => setKirim({ ...kirim, gdp: x })}
+                        label="GDP"
                         placeholder="Isi disini"
-                        rightLabel="mmHg"
+                        rightLabel="mg/dL"
+
+                    />
+
+                    <MyGap jarak={10} />
+
+                    <MyInput
+                        keyboardType='number-pad'
+                        value={kirim.hba1c}
+                        onChangeText={x => setKirim({ ...kirim, hba1c: x })}
+                        label="HbA1C"
+                        placeholder="Isi disini"
+                        rightLabel="%"
 
                     />
 
@@ -162,18 +157,7 @@ export default function TambahTekananDarah({ navigation, route }) {
                     <MyGap jarak={10} />
 
 
-                    <MyInput
 
-                        keyboardType='number-pad'
-                        value={kirim.waktu}
-                        maxLength={5}
-                        onChangeText={x => {
-
-                            setKirim({ ...kirim, waktu: maskJs('99:99', x) })
-                        }}
-                        label="Waktu"
-                        placeholder="Isi disini"
-                    />
 
                     <MyGap jarak={20} />
                 </View>

@@ -57,6 +57,12 @@ import {
   RiwayatPemeriksaanRadiologis,
   RiwayatObat,
   EKG,
+  AddGula,
+  AddLipid,
+  AddLain,
+  AddRadio,
+  AddObat,
+  AddEkg,
 
 
 
@@ -120,7 +126,7 @@ export default function Router() {
       />
 
 
-<Stack.Screen
+      <Stack.Screen
         name="MulaiPage"
         component={MulaiPage}
         options={{
@@ -150,7 +156,7 @@ export default function Router() {
       />
 
 
-<Stack.Screen
+      <Stack.Screen
         name="HasilTekananDarah"
         component={HasilTekananDarah}
         options={{
@@ -159,7 +165,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="TambahHasilTekananDarah"
         component={TambahTekananDarah}
         options={{
@@ -168,7 +174,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="SubRiwayatPemeriksaanLaboratorium"
         component={SubRiwayatPemeriksaanLaboratorium}
         options={{
@@ -177,7 +183,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="RiwayatPemeriksaanRadiologis"
         component={RiwayatPemeriksaanRadiologis}
         options={{
@@ -187,7 +193,7 @@ export default function Router() {
       />
 
 
-<Stack.Screen
+      <Stack.Screen
         name="Gula"
         component={Gula}
         options={{
@@ -195,8 +201,73 @@ export default function Router() {
 
         }}
       />
-      
-<Stack.Screen
+
+
+      <Stack.Screen
+        name="AddGula"
+        component={AddGula}
+        options={{
+          headerShown: false,
+
+        }}
+      />
+
+      <Stack.Screen
+        name="AddLain"
+        component={AddLain}
+        options={{
+          headerShown: false,
+
+        }}
+      />
+
+
+      <Stack.Screen
+        name="AddRadio"
+        component={AddRadio}
+        options={{
+          headerShown: false,
+
+        }}
+      />
+
+      <Stack.Screen
+        name="AddObat"
+        component={AddObat}
+        options={{
+          headerShown: false,
+
+        }}
+      />
+
+      <Stack.Screen
+        name="AddEkg"
+        component={AddEkg}
+        options={{
+          headerShown: false,
+
+        }}
+      />
+
+      <Stack.Screen
+        name="AddLipid"
+        component={AddLipid}
+        options={{
+          headerShown: false,
+
+        }}
+      />
+
+      <Stack.Screen
+        name="TambahTekananDarah"
+        component={TambahTekananDarah}
+        options={{
+          headerShown: false,
+
+        }}
+      />
+
+      <Stack.Screen
         name="ProfilLupid"
         component={ProfilLipid}
         options={{
@@ -204,7 +275,7 @@ export default function Router() {
 
         }}
       />
-      
+
 
       <Stack.Screen
         name="LainLain"
@@ -214,7 +285,7 @@ export default function Router() {
 
         }}
       />
-      
+
 
       <Stack.Screen
         name="Riwayat"
@@ -224,7 +295,7 @@ export default function Router() {
 
         }}
       />
-      
+
       <Stack.Screen
         name="RiwayatObat"
         component={RiwayatObat}
@@ -234,7 +305,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="EKG"
         component={EKG}
         options={{
@@ -243,7 +314,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="TentangAplikasi"
         component={TentangAplikasi}
         options={{
@@ -252,7 +323,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="TrisemesterII1"
         component={TrisemesterII1}
         options={{
@@ -261,7 +332,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="TrisemesterII2"
         component={TrisemesterII2}
         options={{
@@ -270,7 +341,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="TrisemesterIII1"
         component={TrisemesterIII1}
         options={{
@@ -280,7 +351,7 @@ export default function Router() {
       />
 
 
-<Stack.Screen
+      <Stack.Screen
         name="TrisemesterIII2"
         component={TrisemesterIII2}
         options={{
@@ -290,7 +361,7 @@ export default function Router() {
       />
 
 
-<Stack.Screen
+      <Stack.Screen
         name="TrisemesterIII3"
         component={TrisemesterIII3}
         options={{
@@ -300,7 +371,7 @@ export default function Router() {
       />
 
 
-<Stack.Screen
+      <Stack.Screen
         name="IbuBersalin"
         component={IbuBersalin}
         options={{
@@ -309,7 +380,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="IbuNifas"
         component={IbuNifas}
         options={{
@@ -319,7 +390,7 @@ export default function Router() {
       />
 
 
-<Stack.Screen
+      <Stack.Screen
         name="IbuNifasKF"
         component={IbuNifasKF}
         options={{
@@ -338,7 +409,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="TanyaJawab"
         component={TanyaJawab}
         options={{
@@ -347,7 +418,7 @@ export default function Router() {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="Artikel"
         component={Artikel}
         options={{
@@ -357,7 +428,7 @@ export default function Router() {
       />
 
 
-<Stack.Screen
+      <Stack.Screen
         name="Kuesioner"
         component={Kuesioner}
         options={{

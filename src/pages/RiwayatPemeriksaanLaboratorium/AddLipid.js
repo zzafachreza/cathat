@@ -8,14 +8,14 @@ import moment from 'moment';
 import { showMessage } from 'react-native-flash-message';
 import { maskJs, maskCurrency } from 'mask-js';
 
-export default function TambahTekananDarah({ navigation, route }) {
+export default function AddLipid({ navigation, route }) {
 
     const tipe = route.params;
 
     const [data, setData] = useState([]);
     const isFocus = useIsFocused();
     const __getData = () => {
-        getData('tekanan_darah').then(res => {
+        getData('profil_lipid').then(res => {
             if (!res) {
                 setData([])
             } else {
@@ -37,36 +37,21 @@ export default function TambahTekananDarah({ navigation, route }) {
 
     const [kirim, setKirim] = useState({
         id: moment().format('YYYYMMDDHHmmss_TD'),
-        sistolik: '',
-        diastolik: '',
+        kolesterol_total: '',
+        lipid_tg: '',
         tanggal: moment().format('YYYY-MM-DD'),
-        waktu: '',
+        lipid_hdl: '',
+        lipid_ldl: '',
     });
 
     const sendData = () => {
 
 
-        if (kirim.sistolik.length == 0) {
-            showMessage({ message: 'Sistolik wajib di isi!' })
-        } else if (kirim.diastolik.length == 0) {
-            showMessage({ message: 'Diastolik wajib di isi!' })
+        if (kirim.kolesterol_total.length == 0) {
+            showMessage({ message: 'kolesterol_total wajib di isi!' })
+        } else if (kirim.lipid_tg.length == 0) {
+            showMessage({ message: 'lipid_tg wajib di isi!' })
         } else {
-            let hasilStatus = '';
-            if ((kirim.sistolik >= 90 && kirim.sistolik <= 140) && (kirim.diastolik >= 60 && kirim.diastolik <= 90)) {
-                hasilStatus = 'Normal';
-            } else if (kirim.sistolik < 90 && kirim.diastolik < 60) {
-                hasilStatus = 'Hipotensi';
-            } else if (kirim.sistolik > 140) {
-                hasilStatus = 'Hipertensi';
-            } else if (kirim.diastolik < 90) {
-                hasilStatus = 'Hipotensi';
-            } else if (kirim.sistolik > 140 && kirim.diastolik > 90) {
-                hasilStatus = 'Hipertensi';
-            } else if (kirim.sistolik >= 90 && kirim.sistolik <= 140) {
-                hasilStatus = 'Normal';
-            } else if (kirim.diastolik >= 60 && kirim.diastolik <= 90) {
-                hasilStatus = 'Normal';
-            }
 
 
 
@@ -75,14 +60,15 @@ export default function TambahTekananDarah({ navigation, route }) {
                 let IDX = TMP.map(i => i.id).indexOf(kirim.id);
                 TMP[IDX] = {
                     id: kirim.id,
-                    sistolik: kirim.sistolik,
-                    diastolik: kirim.diastolik,
+                    kolesterol_total: kirim.kolesterol_total,
+                    lipid_tg: kirim.lipid_tg,
                     tanggal: kirim.tanggal,
-                    waktu: kirim.waktu,
-                    hasil: hasilStatus
+                    lipid_hdl: kirim.lipid_hdl,
+                    lipid_ldl: kirim.lipid_ldl,
+
                 }
                 setData(TMP);
-                storeData('tekanan_darah', TMP);
+                storeData('profil_lipid', TMP);
                 showMessage({
                     type: 'success',
                     icon: 'success',
@@ -94,14 +80,14 @@ export default function TambahTekananDarah({ navigation, route }) {
                 let TMP = [...data];
                 TMP.push({
                     id: kirim.id,
-                    sistolik: kirim.sistolik,
-                    diastolik: kirim.diastolik,
+                    kolesterol_total: kirim.kolesterol_total,
+                    lipid_tg: kirim.lipid_tg,
                     tanggal: kirim.tanggal,
-                    waktu: kirim.waktu,
-                    hasil: hasilStatus
+                    lipid_hdl: kirim.lipid_hdl,
+                    lipid_ldl: kirim.lipid_ldl
                 });
                 setData(TMP);
-                storeData('tekanan_darah', TMP);
+                storeData('profil_lipid', TMP);
                 showMessage({
                     type: 'success',
                     icon: 'success',
@@ -122,7 +108,7 @@ export default function TambahTekananDarah({ navigation, route }) {
             flex: 1,
             backgroundColor: colors.white
         }}>
-            <MyHeader title="Tambah Tekanan Darah" />
+            <MyHeader title="Profil Lipid" />
             <ScrollView>
                 <View style={{
                     padding: 20,
@@ -131,11 +117,11 @@ export default function TambahTekananDarah({ navigation, route }) {
                 }}>
                     <MyInput
                         keyboardType='number-pad'
-                        value={kirim.sistolik}
-                        onChangeText={x => setKirim({ ...kirim, sistolik: x })}
-                        label="Tekanan Darah Sistolik"
+                        value={kirim.kolesterol_total}
+                        onChangeText={x => setKirim({ ...kirim, kolesterol_total: x })}
+                        label="Kolesterol Total"
                         placeholder="Isi disini"
-                        rightLabel="mmHg"
+                        rightLabel="mg/dL"
 
                     />
 
@@ -144,11 +130,34 @@ export default function TambahTekananDarah({ navigation, route }) {
 
                     <MyInput
                         keyboardType='number-pad'
-                        value={kirim.diastolik}
-                        onChangeText={x => setKirim({ ...kirim, diastolik: x })}
-                        label="Tekanan Darah Diastolik"
+                        value={kirim.lipid_tg}
+                        onChangeText={x => setKirim({ ...kirim, lipid_tg: x })}
+                        label="TG"
                         placeholder="Isi disini"
-                        rightLabel="mmHg"
+                        rightLabel="mg/dL"
+
+                    />
+
+                    <MyGap jarak={10} />
+
+                    <MyInput
+                        keyboardType='number-pad'
+                        value={kirim.lipid_hdl}
+                        onChangeText={x => setKirim({ ...kirim, lipid_hdl: x })}
+                        label="HDL"
+                        placeholder="Isi disini"
+                        rightLabel="mg/dL"
+
+                    />
+                    <MyGap jarak={10} />
+
+                    <MyInput
+                        keyboardType='number-pad'
+                        value={kirim.lipid_ldl}
+                        onChangeText={x => setKirim({ ...kirim, lipid_ldl: x })}
+                        label="LDL"
+                        placeholder="Isi disini"
+                        rightLabel="mg/dL"
 
                     />
 
@@ -162,18 +171,7 @@ export default function TambahTekananDarah({ navigation, route }) {
                     <MyGap jarak={10} />
 
 
-                    <MyInput
 
-                        keyboardType='number-pad'
-                        value={kirim.waktu}
-                        maxLength={5}
-                        onChangeText={x => {
-
-                            setKirim({ ...kirim, waktu: maskJs('99:99', x) })
-                        }}
-                        label="Waktu"
-                        placeholder="Isi disini"
-                    />
 
                     <MyGap jarak={20} />
                 </View>

@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { MyButton, MyGap } from '../../components';
 import { MyDimensi, colors, fonts, windowHeight, windowWidth } from '../../utils';
-import { MYAPP, getData } from '../../utils/localStorage';
+import { MYAPP, getData, storeData } from '../../utils/localStorage';
+import moment from 'moment';
 
 export default function Splash({ navigation }) {
   const img = new Animated.Value(0.5);
@@ -37,15 +38,24 @@ export default function Splash({ navigation }) {
       })
     ]).start();
 
-  
+
     setTimeout(() => {
-    getData('user').then(res => {
-    if (!res) {
-    navigation.replace('MulaiPage')
-    } else {
-     navigation.replace('MainApp')
-     }
-     })
+      getData('user').then(res => {
+        if (!res) {
+          navigation.replace('MulaiPage');
+          storeData('user', {
+            nama_lengkap: '',
+            tanggal_lahir: moment().format('YYYY-MM-DD'),
+            golongan_darah: 'A+',
+            riwayat_alergi: '',
+            riwayat_penyakit_terdahulu: ''
+
+
+          })
+        } else {
+          navigation.replace('MainApp')
+        }
+      })
     }, 1200);
   }, []);
 
@@ -73,14 +83,14 @@ export default function Splash({ navigation }) {
           style={{
             transform: [{ scale: img }],
             width: windowWidth / 1.4,
-            height: windowWidth / 1.4,  
-            marginTop:'30%'
+            height: windowWidth / 1.4,
+            marginTop: '30%'
 
           }}
         />
 
 
-        <ActivityIndicator style={{marginTop:50}} color={colors.primary} size="small" />
+        <ActivityIndicator style={{ marginTop: 50 }} color={colors.primary} size="small" />
 
       </View>
 

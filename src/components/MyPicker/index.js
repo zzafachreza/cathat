@@ -26,7 +26,7 @@ export default function MyPicker({
           ...fonts.subheadline3,
           color: colors.primary,
           marginBottom: 8,
-          
+
         }}>
         {label}
       </Text>
@@ -42,12 +42,12 @@ export default function MyPicker({
           left: 12,
           top: 13,
         }}>
-          <Icon type='ionicon' name={iconname} color={Color.blueGray[300]} size={24} />
+          <Icon type='ionicon' name='list' color={Color.blueGray[300]} size={24} />
         </View>
         <Picker style={{ width: '90%', height: 50, left: 30, transform: [{ scale: 1 }] }}
           selectedValue={value} onValueChange={onValueChange}>
           {data.map(item => {
-            return <Picker.Item textStyle={{ fontSize: 12, ...fonts.body2, color: colors.primary,  }} value={item.value} label={item.label} />;
+            return <Picker.Item textStyle={{ fontSize: 12, ...fonts.body2, color: colors.primary, }} value={item.value} label={item.label} />;
           })}
         </Picker>
         <View style={{

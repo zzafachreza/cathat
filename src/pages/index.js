@@ -53,6 +53,13 @@ import LainLain from './RiwayatPemeriksaanLaboratorium/lainlain';
 import RiwayatPemeriksaanRadiologis from './RiwayatPemekrisaanRadiologis';
 import RiwayatObat from './RiwayatObat';
 import EKG from './EKG';
+import TambahTekananDarah from './TekananDarah/add';
+import AddGula from './RiwayatPemeriksaanLaboratorium/AddGula';
+import AddLipid from './RiwayatPemeriksaanLaboratorium/AddLipid';
+import AddLain from './RiwayatPemeriksaanLaboratorium/AddLain';
+import AddRadio from './RiwayatPemekrisaanRadiologis/AddRadio';
+import AddObat from './RiwayatObat/AddObat';
+import AddEkg from './EKG/AddEkg';
 
 
 
@@ -115,10 +122,17 @@ export {
   RiwayatPemeriksaanRadiologis,
   RiwayatObat,
   EKG,
-  
+  TambahTekananDarah,
+  AddGula,
+  AddLipid,
+  AddLain,
+  AddRadio,
+  AddObat,
+  AddEkg
 
 
 
-  
+
+
 
 };

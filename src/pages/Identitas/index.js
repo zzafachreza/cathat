@@ -1,73 +1,117 @@
 import { View, Text, SafeAreaView } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { colors } from '../../utils'
 import { MyButton, MyCalendar, MyGap, MyHeader, MyInput, MyPicker } from '../../components'
 import { ScrollView } from 'react-native'
 import { color, Value } from 'react-native-reanimated'
+import { useIsFocused } from '@react-navigation/native'
+import { getData, storeData } from '../../utils/localStorage'
+import { showMessage } from 'react-native-flash-message'
 
-export default function Indentitas({navigation}) {
+export default function Indentitas({ navigation }) {
+
+  const [kirim, setKirim] = useState({});
+
+  const isFocus = useIsFocused();
+  useEffect(() => {
+
+    if (isFocus) {
+      __getData();
+    }
+
+  }, [isFocus]);
+
+  const sendData = () => {
+    console.log(kirim);
+    storeData('user', kirim);
+    showMessage({
+      type: 'success',
+      icon: 'success',
+      message: 'Data berhasil di simpan !'
+    });
+    navigation.goBack();
+  }
+
+  const __getData = () => {
+    getData('user').then(res => {
+      console.log(res)
+      setKirim(res)
+    })
+  }
+
+
   return (
     <SafeAreaView style={{
-        flex:1,
-        backgroundColor:colors.white
+      flex: 1,
+      backgroundColor: colors.white
     }}>
-    <MyHeader title="Identitas"/>
+      <MyHeader title="Identitas" />
       <ScrollView>
         <View style={{
-            padding:20
+          padding: 20
         }}>
 
-            <MyInput 
-                label="Nama Lengkap"
-                placeholder="Belum diisi"
-            />
+          <MyInput
+            value={kirim.nama_lengkap}
+            onChangeText={x => setKirim({ ...kirim, nama_lengkap: x })}
+            label="Nama Lengkap"
+            placeholder="Belum diisi"
+          />
 
-            <MyGap jarak={20}/> 
+          <MyGap jarak={20} />
 
-            <MyCalendar label="Tanggal Lahir"/>
+          <MyCalendar label="Tanggal Lahir" value={kirim.tanggal_lahir}
+            onDateChange={x => setKirim({ ...kirim, tanggal_lahir: x })} />
 
-            <MyGap jarak={20}/> 
+          <MyGap jarak={20} />
 
-            <MyPicker 
-                label="Golongan  Darah"
-                data={[
-                    {label: "A+", Value: "A+"},
-                    {label: "B+", Value: "B+"},
-                    {label: "AB+", Value: "AB+"},
-                    {label: "O+", Value: "O+"},
-                    {label: "A-", Value: "A-"},
-                    {label: "B-", Value: "B-"},
-                    {label: "AB-", Value: "AB-"},
-                    {label: "O-", Value: "O-"},
-                ]}
-            />
+          <MyPicker
 
-            
-            <MyGap jarak={20}/> 
+            value={kirim.golongan_darah}
+            onValueChange={x => setKirim({ ...kirim, golongan_darah: x })}
+            label="Golongan  Darah"
+            data={[
+              { label: "A+", value: "A+" },
+              { label: "B+", value: "B+" },
+              { label: "AB+", value: "AB+" },
+              { label: "O+", value: "O+" },
+              { label: "A-", value: "A-" },
+              { label: "B-", value: "B-" },
+              { label: "AB-", value: "AB-" },
+              { label: "O-", value: "O-" },
+            ]}
+          />
 
-            <MyInput
-                label="Riwayat Elergi"
-                placeholder="Isi disini"
-            />
 
-            <MyGap jarak={20}/> 
+          <MyGap jarak={20} />
 
-            <MyInput
-                label="Riwayat Penyakit Terdahulu"
-                placeholder="Isi disini"
-            />
-            
+          <MyInput
+            value={kirim.riwayat_alergi}
+            onChangeText={x => setKirim({ ...kirim, riwayat_alergi: x })}
+            label="Riwayat Alergi"
+            placeholder="Isi disini"
+          />
+
+          <MyGap jarak={20} />
+
+          <MyInput
+            value={kirim.riwayat_penyakit_terdahulu}
+            onChangeText={x => setKirim({ ...kirim, riwayat_penyakit_terdahulu: x })}
+            label="Riwayat Penyakit Terdahulu"
+            placeholder="Isi disini"
+          />
+
 
         </View>
       </ScrollView>
 
       <View style={{
-        padding:20,
+        padding: 20,
 
       }}>
-            <MyButton title="Simpan" colorText={colors.primary}
-                
-            />
+        <MyButton title="Simpan" onPress={sendData} colorText={colors.primary}
+
+        />
       </View>
     </SafeAreaView>
   )

@@ -1,102 +1,166 @@
-import React, { useState } from 'react';
-import { View, Text, ScrollView, TouchableNativeFeedback, Image, TextInput, TouchableWithoutFeedback } from 'react-native';
+import { Alert, FlatList, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Icon } from 'react-native-elements'
+import { MyHeader } from '../../components'
+import { Color, colors, fonts } from '../../utils'
+import { useIsFocused } from '@react-navigation/native'
+import { getData, MYAPP, storeData } from '../../utils/localStorage'
+import moment from 'moment'
 
-import { MyButton, MyCalendar, MyGap, MyHeader, MyInput } from '../../components';
-import { colors, fonts } from '../../utils';
+export default function HasilTekananDarah({ navigation }) {
 
-export default function Gula({ navigation }) {
-  // State untuk mengatur tampilan
-  const [isInputMode, setIsInputMode] = useState(false);
-  const [gulaValue, setGulaValue] = useState('');
 
-  const handleAddPress = () => {
-    // Mengubah tampilan menjadi mode input
-    setIsInputMode(true);
-  };
+  const [data, setData] = useState([]);
+  const isFocus = useIsFocused();
+  useEffect(() => {
+    if (isFocus) {
+      __getData();
+    }
+  }, [isFocus]);
 
-  const handleSavePress = () => {
-    // Di sini Anda dapat menambahkan logika untuk menyimpan data gula
-    console.log('Nilai Gula:', gulaValue);
+  const __getData = () => {
+    getData('gula_darah').then(res => {
+      if (!res) {
+        setData([]);
+        storeData('gula_darah', []);
+      } else {
+        console.log(res)
+        setData(res);
+      }
+    })
+  }
 
-    // Kembali ke tampilan awal setelah menyimpan data
-    setIsInputMode(false);
-  };
-
-  const handleBackPress = () => {
-    // Kembali ke tampilan awal dalam mode yang sama
-    setIsInputMode(false);
-  };    
 
   return (
-    <View style={{ flex: 1, backgroundColor: colors.white }}>
+    <SafeAreaView style={{
+      flex: 1,
+      backgroundColor: colors.white
+    }}>
       <MyHeader title="Gula" />
 
-      {isInputMode ? (
-        // Tampilan untuk input gula
-        <View>
-        <ScrollView>
-          <View style={{ padding: 20 }}>
+      <View style={{
+        flex: 1,
+        padding: 10,
+      }}>
+        <FlatList data={data} renderItem={({ item, index }) => {
+          return (
+            <View style={{
+              padding: 10,
+              marginVertical: 5,
+              borderRadius: 10,
+              borderWidth: 1,
+              borderColor: colors.border
+            }}>
+              <View style={{
+                alignItems: 'center',
+                flexDirection: 'row',
 
-            <MyInput label="GDS" rightLabel="mg/dl"/>
-
-            <MyGap jarak={10}/>
-
-             <MyInput label="GDP" rightLabel="mg/dl"/>
-
-            <MyGap jarak={10}/>
-
-             <MyInput label="HbA1C" rightLabel="%"/>
-
-            <MyGap jarak={10}/>
-
-            <MyCalendar label="Tanggal" />
-
-            <MyGap/>
-
-          </View>
-        </ScrollView>
-        <View style={{
-            padding:20
-        }}>
-            <MyButton title="Simpan"/>
-                <MyGap jarak={20}/>
-            <TouchableWithoutFeedback onPress={handleBackPress}>
-                <View style={{
-                    padding:10,
-                    borderWidth:1,
-                    borderRadius:10,
-                    borderColor:colors.danger
-                }}>
-                    <Text style={{
-                        fontFamily:fonts.primary[500],
-                        textAlign:'center',
-                        color:colors.danger
-                    }}>Kembali</Text>
-                </View>
-            </TouchableWithoutFeedback>
-        </View>
-        </View>
-        
-      ) : (
-        // Tampilan awal dengan tombol Add
-        <>
-          <ScrollView>
-            <View style={{ padding: 20 }}>
-              {/* Konten lainnya di sini */}
-            </View>
-          </ScrollView>
-          <View style={{ padding: 10 }}>
-            <TouchableNativeFeedback onPress={handleAddPress}>
-              <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                <Image
-                  style={{ width: 68, height: 68 }}
-                  source={require('../../assets/add.png')}
-                />
+              }}>
+                <Text style={{
+                  ...fonts.body3,
+                  flex: 1,
+                }}>Tanggal</Text>
+                <Text style={{
+                  ...fonts.body3,
+                }}>{moment(item.tanggal).format('dddd, DD MMMM YYYY')}</Text>
               </View>
-            </TouchableNativeFeedback>
-          </View>
-        </>
-      )}
-    </View>
-  );
+              <View style={{
+                alignItems: 'center',
+                flexDirection: 'row',
+
+              }}>
+                <Text style={{
+                  ...fonts.body3,
+                  flex: 1,
+                }}>GDS</Text>
+                <Text style={{
+                  ...fonts.body3,
+                }}>{item.gds} mg/dL</Text>
+              </View>
+              <View style={{
+                alignItems: 'center',
+                flexDirection: 'row',
+
+              }}>
+                <Text style={{
+                  ...fonts.body3,
+                  flex: 1,
+                }}>GDP</Text>
+                <Text style={{
+                  ...fonts.body3,
+                }}>{item.gdp} mg/dL</Text>
+              </View>
+              <View style={{
+                alignItems: 'center',
+                flexDirection: 'row',
+
+              }}>
+                <Text style={{
+                  ...fonts.body3,
+                  flex: 1,
+                }}>HbA1C</Text>
+                <Text style={{
+                  ...fonts.body3,
+                }}>{item.hba1c}%</Text>
+              </View>
+
+              <View style={{
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end'
+              }}>
+                <TouchableOpacity onPress={() => navigation.navigate('AddGula', {
+                  tipe: 'EDIT',
+                  data: item
+                })} style={{
+                  padding: 10,
+                }}>
+                  <Icon type='ionicon' name='create' color={colors.black} />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => Alert.alert(MYAPP, 'Apakah kamu yakin akan hapus ini ?', [
+                  { text: 'Tidak', },
+                  {
+                    text: 'Ya, Hapus',
+                    onPress: () => {
+                      let tmp = data.filter(i => i.id !== item.id);
+                      console.log('filter', tmp);
+                      setData(tmp);
+                      storeData('gula_darah', tmp);
+
+                    }
+                  }
+                ])} style={{
+                  padding: 10,
+                }}>
+                  <Icon type='ionicon' name='trash' color={colors.danger} />
+                </TouchableOpacity>
+              </View>
+
+            </View>
+          )
+        }} />
+      </View>
+      <View style={{
+        paddingBottom: 20,
+        paddingHorizontal: 20,
+        alignItems: 'flex-end'
+      }}>
+        <TouchableOpacity onPress={() => navigation.navigate('AddGula', {
+          tipe: 'ADD',
+          data: {}
+        })} style={{
+          width: 60,
+          height: 60,
+          borderRadius: 30,
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: colors.primary
+        }}>
+          <Icon type='ionicon' name='add' size={40} color={colors.white} />
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  )
 }
+
+const styles = StyleSheet.create({})
