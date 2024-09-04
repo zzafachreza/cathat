@@ -1,12 +1,13 @@
-import { View, Text, SafeAreaView } from 'react-native'
+import { View, Text, SafeAreaView, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { colors } from '../../utils'
+import { colors, fonts } from '../../utils'
 import { MyButton, MyCalendar, MyGap, MyHeader, MyInput, MyPicker } from '../../components'
 import { ScrollView } from 'react-native'
 import { color, Value } from 'react-native-reanimated'
 import { useIsFocused } from '@react-navigation/native'
-import { getData, storeData } from '../../utils/localStorage'
+import { getData, MYAPP, storeData } from '../../utils/localStorage'
 import { showMessage } from 'react-native-flash-message'
+import moment from 'moment'
 
 export default function Indentitas({ navigation }) {
 
@@ -22,14 +23,23 @@ export default function Indentitas({ navigation }) {
   }, [isFocus]);
 
   const sendData = () => {
-    console.log(kirim);
-    storeData('user', kirim);
-    showMessage({
-      type: 'success',
-      icon: 'success',
-      message: 'Data berhasil di simpan !'
-    });
-    navigation.goBack();
+    Alert.alert(MYAPP, 'Apakah kamu yakin akan menyimpan ini ?', [
+      { text: 'TIDAK' },
+      {
+        text: 'YA, SIMPAN',
+
+        onPress: () => {
+          console.log(kirim);
+          storeData('user', kirim);
+          showMessage({
+            type: 'success',
+            icon: 'success',
+            message: 'Data berhasil di simpan !'
+          });
+          navigation.goBack();
+        }
+      }
+    ])
   }
 
   const __getData = () => {
@@ -62,6 +72,12 @@ export default function Indentitas({ navigation }) {
 
           <MyCalendar label="Tanggal Lahir" value={kirim.tanggal_lahir}
             onDateChange={x => setKirim({ ...kirim, tanggal_lahir: x })} />
+
+          <Text style={{
+            marginTop: 10,
+            ...fonts.subheadline3,
+            color: colors.primary,
+          }}>Usia {moment().diff(kirim.tanggal_lahir, 'years')} Tahun</Text>
 
           <MyGap jarak={20} />
 

@@ -53,7 +53,7 @@ export default function Splash({ navigation }) {
 
           })
         } else {
-          navigation.replace('MainApp')
+          navigation.replace('MulaiPage')
         }
       })
     }, 1200);

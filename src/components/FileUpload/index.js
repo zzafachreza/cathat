@@ -1,29 +1,101 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, PermissionsAndroid, Alert } from 'react-native';
 import DocumentPicker from 'react-native-document-picker';
 import { Icon } from 'react-native-elements';
 import { colors, Color } from '../../utils/colors';
 import { fonts } from '../../utils/fonts';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { MYAPP } from '../../utils/localStorage';
 
 export default function FileUpload({ label, iconname = 'cloud-upload', onFileSelected }) {
   const [fileName, setFileName] = useState(null);
 
   const pickDocument = async () => {
+
     try {
-      const result = await DocumentPicker.pick({
-        type: [DocumentPicker.types.allFiles],
-      });
-      setFileName(result[0].name);
-      if (onFileSelected) {
-        onFileSelected(result[0]);
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'Cool Photo App Camera Permission',
+          message:
+            'Cool Photo App needs access to your camera ' +
+            'so you can take awesome pictures.',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+
+
+        Alert.alert(MYAPP, 'Pilih ambil gambar', [
+          { text: 'BATAL' },
+          {
+            text: 'GALERI',
+            onPress: () => {
+              launchImageLibrary({
+                includeBase64: false,
+                quality: 1,
+                mediaType: "photo",
+                maxWidth: 500,
+                maxHeight: 500
+              }, response => {
+                // console.log('All Response = ', response.assets[0].uri);
+                if (!response.didCancel) {
+                  setFileName(response.assets[0].fileName);
+                  onFileSelected(response.assets[0]);
+                }
+
+
+              });
+            }
+          },
+          {
+            text: 'KAMERA',
+            onPress: () => {
+              launchCamera({
+                includeBase64: false,
+                quality: 1,
+                mediaType: "photo",
+                maxWidth: 500,
+                maxHeight: 500
+              }, response => {
+                // console.log('All Response = ', response.assets[0].uri);
+                if (!response.didCancel) {
+                  setFileName(response.assets[0].fileName);
+                  onFileSelected(response.assets[0]);
+                }
+
+
+              })
+            }
+          }
+        ])
+
+
+      } else {
+        console.log('Camera permission denied');
       }
     } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('User cancelled the document picker');
-      } else {
-        throw err;
-      }
+      console.warn(err);
     }
+    // try {
+    //   const result = await DocumentPicker.pick({
+    //     type: [DocumentPicker.types.allFiles],
+    //   });
+    //   setFileName(result[0].name);
+    //   if (onFileSelected) {
+    //     onFileSelected(result[0]);
+    //   }
+    // } catch (err) {
+    //   if (DocumentPicker.isCancel(err)) {
+    //     console.log('User cancelled the document picker');
+    //   } else {
+    //     throw err;
+    //   }
+    // }
+
+
   };
 
   return (

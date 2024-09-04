@@ -126,7 +126,7 @@ export default function AddObat({ navigation, route }) {
 
 
                     <MyInput
-                        keyboardType='number-pad'
+
                         value={kirim.dosis}
                         onChangeText={x => setKirim({ ...kirim, dosis: x })}
                         label="Dosis"
@@ -137,10 +137,10 @@ export default function AddObat({ navigation, route }) {
                     <MyGap jarak={10} />
 
                     <MyInput
-                        keyboardType='number-pad'
+
                         value={kirim.keterangan}
                         onChangeText={x => setKirim({ ...kirim, keterangan: x })}
-                        label="keterangan"
+                        label="Keterangan"
                         placeholder="Isi disini"
 
 

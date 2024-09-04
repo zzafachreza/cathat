@@ -98,7 +98,7 @@ export default function RiwayatObat({ navigation }) {
                 <Text style={{
                   ...fonts.body3,
                   flex: 1,
-                }}>Keteranagn</Text>
+                }}>Keterangan</Text>
                 <Text style={{
                   ...fonts.body3,
                 }}>{item.keterangan}</Text>

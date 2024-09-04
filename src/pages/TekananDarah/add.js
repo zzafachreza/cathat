@@ -52,19 +52,27 @@ export default function TambahTekananDarah({ navigation, route }) {
             showMessage({ message: 'Diastolik wajib di isi!' })
         } else {
             let hasilStatus = '';
-            if ((kirim.sistolik >= 90 && kirim.sistolik <= 140) && (kirim.diastolik >= 60 && kirim.diastolik <= 90)) {
-                hasilStatus = 'Normal';
-            } else if (kirim.sistolik < 90 && kirim.diastolik < 60) {
-                hasilStatus = 'Hipotensi';
-            } else if (kirim.sistolik > 140) {
+            // if ((kirim.sistolik >= 90 && kirim.sistolik <= 140) && (kirim.diastolik >= 60 && kirim.diastolik <= 90)) {
+            //     hasilStatus = 'Normal';
+            // } else if (kirim.sistolik < 90 && kirim.diastolik < 60) {
+            //     hasilStatus = 'Hipotensi';
+            // } else if (kirim.sistolik > 140) {
+            //     hasilStatus = 'Hipertensi';
+            // } else if (kirim.diastolik < 90) {
+            //     hasilStatus = 'Hipotensi';
+            // } else if (kirim.sistolik > 140 && kirim.diastolik > 90) {
+            //     hasilStatus = 'Hipertensi';
+            // } else if (kirim.sistolik >= 90 && kirim.sistolik <= 140) {
+            //     hasilStatus = 'Normal';
+            // } else if (kirim.diastolik >= 60 && kirim.diastolik <= 90) {
+            //     hasilStatus = 'Normal';
+            // }
+
+            if ((kirim.sistolik >= 130 && kirim.sistolik <= 139) || (kirim.diastolik >= 80 && kirim.diastolik <= 89)) {
+                hasilStatus = 'Prehipertensi';
+            } else if (kirim.sistolik >= 140 || kirim.diastolik >= 90) {
                 hasilStatus = 'Hipertensi';
-            } else if (kirim.diastolik < 90) {
-                hasilStatus = 'Hipotensi';
-            } else if (kirim.sistolik > 140 && kirim.diastolik > 90) {
-                hasilStatus = 'Hipertensi';
-            } else if (kirim.sistolik >= 90 && kirim.sistolik <= 140) {
-                hasilStatus = 'Normal';
-            } else if (kirim.diastolik >= 60 && kirim.diastolik <= 90) {
+            } else {
                 hasilStatus = 'Normal';
             }
 

@@ -117,7 +117,7 @@ export default function AddRadio({ navigation, route }) {
 
                                 value={kirim.judul}
                                 onChangeText={x => setKirim({ ...kirim, judul: x })}
-                                label="judul"
+                                label="Judul"
                                 placeholder="Isi disini"
 
                             />
