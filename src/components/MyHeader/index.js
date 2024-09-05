@@ -24,7 +24,7 @@ export default function MyHeader({ onPress, color = colors.white, title, icon = 
 
     }}>
       <View>
-        <TouchableOpacity onPress={() => navigation.goBack()} style={{
+        <TouchableOpacity onPress={!onPress ? () => navigation.goBack() : onPress} style={{
           marginTop: -30
         }}>
           <Icon type='ionicon' name='arrow-back-outline' size={20} color={color} />

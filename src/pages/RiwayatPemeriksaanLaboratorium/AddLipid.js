@@ -48,9 +48,7 @@ export default function AddLipid({ navigation, route }) {
 
 
         if (kirim.kolesterol_total.length == 0) {
-            showMessage({ message: 'kolesterol_total wajib di isi!' })
-        } else if (kirim.lipid_tg.length == 0) {
-            showMessage({ message: 'lipid_tg wajib di isi!' })
+            showMessage({ message: 'kolesterol total wajib di isi!' })
         } else {
 
 

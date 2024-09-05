@@ -48,8 +48,6 @@ export default function AddGula({ navigation, route }) {
 
         if (kirim.gds.length == 0) {
             showMessage({ message: 'gds wajib di isi!' })
-        } else if (kirim.gdp.length == 0) {
-            showMessage({ message: 'gdp wajib di isi!' })
         } else {
 
 

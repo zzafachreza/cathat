@@ -48,8 +48,6 @@ export default function AddObat({ navigation, route }) {
 
         if (kirim.nama_obat.length == 0) {
             showMessage({ message: 'Nama Obat wajib di isi!' })
-        } else if (kirim.dosis.length == 0) {
-            showMessage({ message: 'Dosis wajib di isi!' })
         } else {
 
 
