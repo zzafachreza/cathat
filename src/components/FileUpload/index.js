@@ -37,8 +37,8 @@ export default function FileUpload({ label, iconname = 'cloud-upload', onFileSel
                 includeBase64: false,
                 quality: 1,
                 mediaType: "photo",
-                maxWidth: 500,
-                maxHeight: 500
+                maxWidth: 2000,
+                maxHeight: 2000
               }, response => {
                 // console.log('All Response = ', response.assets[0].uri);
                 if (!response.didCancel) {

@@ -90,7 +90,7 @@ export default function HasilTekananDarah({ navigation }) {
                   ...fonts.body3,
                 }}>{item.sistolik} / {item.diastolik} mmHg</Text>
               </View>
-              <View style={{
+              {/* <View style={{
                 alignItems: 'center',
                 flexDirection: 'row',
 
@@ -103,7 +103,7 @@ export default function HasilTekananDarah({ navigation }) {
                   ...fonts.headline4,
                   color: colors.primary
                 }}>{item.hasil}</Text>
-              </View>
+              </View> */}
 
               <View style={{
                 flexDirection: 'row',
