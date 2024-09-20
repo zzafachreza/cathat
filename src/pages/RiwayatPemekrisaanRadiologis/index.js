@@ -6,6 +6,7 @@ import { Color, colors, fonts, windowHeight, windowWidth } from '../../utils'
 import { useIsFocused } from '@react-navigation/native'
 import { getData, MYAPP, storeData } from '../../utils/localStorage'
 import moment from 'moment'
+import ImageView from "react-native-image-viewing";
 
 export default function RiwayatPemekrisaanRadiologis({ navigation }) {
 
@@ -163,7 +164,7 @@ export default function RiwayatPemekrisaanRadiologis({ navigation }) {
 
       }
 
-      {buka &&
+      {/* {buka &&
 
         <View style={{
           flex: 1,
@@ -187,7 +188,14 @@ export default function RiwayatPemekrisaanRadiologis({ navigation }) {
           </TouchableOpacity>
         </View>
 
-      }
+      } */}
+
+      <ImageView
+        images={[{ uri: gambar }]}
+        imageIndex={0}
+        visible={buka}
+        onRequestClose={() => setBuka(false)}
+      />
     </SafeAreaView>
   )
 }
